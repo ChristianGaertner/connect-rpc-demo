@@ -7,6 +7,7 @@ import (
 
 	"connectrpc.com/connect"
 	"connectrpc.com/validate"
+	"github.com/ChristianGaertner/connect-rpc-demo/internal/interceptor"
 	pb "github.com/ChristianGaertner/connect-rpc-demo/proto/order/v1"
 	"github.com/ChristianGaertner/connect-rpc-demo/proto/order/v1/orderv1connect"
 	productv1 "github.com/ChristianGaertner/connect-rpc-demo/proto/product/v1"
@@ -28,6 +29,7 @@ func Register(ctx context.Context, mux *http.ServeMux, ps productv1connect.Produ
 	}
 
 	mux.Handle(orderv1connect.NewOrderServiceHandler(srvc, connect.WithInterceptors(
+		interceptor.Logging(),
 		validationInterceptor,
 	)))
 	return nil

@@ -7,6 +7,7 @@ import (
 
 	"connectrpc.com/connect"
 	"connectrpc.com/validate"
+	"github.com/ChristianGaertner/connect-rpc-demo/internal/interceptor"
 	pb "github.com/ChristianGaertner/connect-rpc-demo/proto/product/v1"
 	"github.com/ChristianGaertner/connect-rpc-demo/proto/product/v1/productv1connect"
 )
@@ -22,6 +23,7 @@ func Register(ctx context.Context, mux *http.ServeMux) error {
 	}
 
 	mux.Handle(productv1connect.NewProductServiceHandler(srvc, connect.WithInterceptors(
+		interceptor.Logging(),
 		validationInterceptor,
 	)))
 	return nil
