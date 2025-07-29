@@ -7,19 +7,12 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/ChristianGaertner/connect-rpc-demo/internal/inproc"
 	"github.com/ChristianGaertner/connect-rpc-demo/internal/order"
 	"github.com/ChristianGaertner/connect-rpc-demo/internal/product"
 	"github.com/ChristianGaertner/connect-rpc-demo/proto/product/v1/productv1connect"
+	"golang.org/x/sync/errgroup"
 )
-
-var (
-	serviceFlag = flag.String("service", "", "Service to run (order or product)")
-)
-
-var dns = map[string]string{
-	"order":   "localhost:7444",
-	"product": "localhost:7445",
-}
 
 func main() {
 	flag.Parse()
@@ -31,20 +24,26 @@ func main() {
 func run(ctx context.Context) error {
 	mux := http.NewServeMux()
 
+	ipcMux := http.NewServeMux()
+	ipc := inproc.NewInMemoryServer(ipcMux)
+	defer ipc.Close()
+
 	var err error
-	switch *serviceFlag {
-	case "order":
-		ps := productv1connect.NewProductServiceClient(http.DefaultClient, "http://"+dns["product"])
-		err = order.Register(ctx, mux, ps)
-	case "product":
-		err = product.Register(ctx, mux)
-	default:
-		err = fmt.Errorf("unknown service: %q", *serviceFlag)
-	}
+	ps := productv1connect.NewProductServiceClient(ipc.Client(), ipc.URL())
+	err = order.Register(ctx, mux, ps)
 	if err != nil {
-		return fmt.Errorf("register service: %w", err)
+		return fmt.Errorf("register order service: %w", err)
 	}
-	addr := dns[*serviceFlag]
-	fmt.Println(*serviceFlag, "service started on", addr)
-	return http.ListenAndServe(addr, mux)
+	err = product.Register(ctx, ipcMux)
+	if err != nil {
+		return fmt.Errorf("register product service: %w", err)
+	}
+
+	g, ctx := errgroup.WithContext(ctx)
+	g.Go(func() error {
+		addr := "localhost:7444"
+		fmt.Println(addr, "service started on", addr)
+		return http.ListenAndServe(addr, mux)
+	})
+	return g.Wait()
 }

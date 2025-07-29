@@ -34,7 +34,7 @@ func Register(ctx context.Context, mux *http.ServeMux, ps productv1connect.Produ
 }
 
 func (s Service) CreateOrder(ctx context.Context, req *connect.Request[pb.CreateOrderRequest]) (*connect.Response[pb.CreateOrderResponse], error) {
-	fmt.Println(req.Msg.GetId())
+	fmt.Println("CreateOrder", req.Msg.GetId())
 	for _, l := range req.Msg.GetItems() {
 		productReq := connect.NewRequest(&productv1.GetProductRequest{Id: l.GetProductId()})
 		resp, err := s.ps.GetProduct(ctx, productReq)

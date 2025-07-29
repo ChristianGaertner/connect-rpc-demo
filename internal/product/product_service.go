@@ -28,7 +28,7 @@ func Register(ctx context.Context, mux *http.ServeMux) error {
 }
 
 func (Service) GetProduct(ctx context.Context, req *connect.Request[pb.GetProductRequest]) (*connect.Response[pb.GetProductResponse], error) {
-	fmt.Println(req.Msg.GetId())
+	fmt.Println("GetProduct", req.Msg.GetId())
 	return connect.NewResponse(&pb.GetProductResponse{
 		Id:   req.Msg.GetId(),
 		Name: "Product " + req.Msg.GetId(),
