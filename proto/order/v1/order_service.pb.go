@@ -195,8 +195,8 @@ const file_order_v1_order_service_proto_rawDesc = "" +
 	"\bquantity\x18\x03 \x01(\x03R\bquantity\"\x15\n" +
 	"\x13CreateOrderResponse2Z\n" +
 	"\fOrderService\x12J\n" +
-	"\vCreateOrder\x12\x1c.order.v1.CreateOrderRequest\x1a\x1d.order.v1.CreateOrderResponseB\xa2\x01\n" +
-	"\fcom.order.v1B\x11OrderServiceProtoP\x01Z>github.com/ChristianGaertner/connect-rpc-demo/order/v1;orderv1\xa2\x02\x03OXX\xaa\x02\bOrder.V1\xca\x02\bOrder\\V1\xe2\x02\x14Order\\V1\\GPBMetadata\xea\x02\tOrder::V1b\x06proto3"
+	"\vCreateOrder\x12\x1c.order.v1.CreateOrderRequest\x1a\x1d.order.v1.CreateOrderResponseB\xa8\x01\n" +
+	"\fcom.order.v1B\x11OrderServiceProtoP\x01ZDgithub.com/ChristianGaertner/connect-rpc-demo/proto/order/v1;orderv1\xa2\x02\x03OXX\xaa\x02\bOrder.V1\xca\x02\bOrder\\V1\xe2\x02\x14Order\\V1\\GPBMetadata\xea\x02\tOrder::V1b\x06proto3"
 
 var (
 	file_order_v1_order_service_proto_rawDescOnce sync.Once
