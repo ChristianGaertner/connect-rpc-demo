@@ -142,6 +142,42 @@ func (x *LineItem) GetQuantity() int64 {
 	return 0
 }
 
+type CreateOrderResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateOrderResponse) Reset() {
+	*x = CreateOrderResponse{}
+	mi := &file_order_v1_order_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateOrderResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateOrderResponse) ProtoMessage() {}
+
+func (x *CreateOrderResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_order_v1_order_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateOrderResponse.ProtoReflect.Descriptor instead.
+func (*CreateOrderResponse) Descriptor() ([]byte, []int) {
+	return file_order_v1_order_service_proto_rawDescGZIP(), []int{2}
+}
+
 var File_order_v1_order_service_proto protoreflect.FileDescriptor
 
 const file_order_v1_order_service_proto_rawDesc = "" +
@@ -156,9 +192,10 @@ const file_order_v1_order_service_proto_rawDesc = "" +
 	"\bposition\x18\x01 \x01(\x05R\bposition\x12\x1d\n" +
 	"\n" +
 	"product_id\x18\x02 \x01(\tR\tproductId\x12\x1a\n" +
-	"\bquantity\x18\x03 \x01(\x03R\bquantity2U\n" +
-	"\bOrderMod\x12I\n" +
-	"\vCreateOrder\x12\x1c.order.v1.CreateOrderRequest\x1a\x1c.order.v1.CreateOrderRequestB\xa2\x01\n" +
+	"\bquantity\x18\x03 \x01(\x03R\bquantity\"\x15\n" +
+	"\x13CreateOrderResponse2Z\n" +
+	"\fOrderService\x12J\n" +
+	"\vCreateOrder\x12\x1c.order.v1.CreateOrderRequest\x1a\x1d.order.v1.CreateOrderResponseB\xa2\x01\n" +
 	"\fcom.order.v1B\x11OrderServiceProtoP\x01Z>github.com/ChristianGaertner/connect-rpc-demo/order/v1;orderv1\xa2\x02\x03OXX\xaa\x02\bOrder.V1\xca\x02\bOrder\\V1\xe2\x02\x14Order\\V1\\GPBMetadata\xea\x02\tOrder::V1b\x06proto3"
 
 var (
@@ -173,17 +210,18 @@ func file_order_v1_order_service_proto_rawDescGZIP() []byte {
 	return file_order_v1_order_service_proto_rawDescData
 }
 
-var file_order_v1_order_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_order_v1_order_service_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_order_v1_order_service_proto_goTypes = []any{
 	(*CreateOrderRequest)(nil),    // 0: order.v1.CreateOrderRequest
 	(*LineItem)(nil),              // 1: order.v1.LineItem
-	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
+	(*CreateOrderResponse)(nil),   // 2: order.v1.CreateOrderResponse
+	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
 }
 var file_order_v1_order_service_proto_depIdxs = []int32{
-	2, // 0: order.v1.CreateOrderRequest.created_at:type_name -> google.protobuf.Timestamp
+	3, // 0: order.v1.CreateOrderRequest.created_at:type_name -> google.protobuf.Timestamp
 	1, // 1: order.v1.CreateOrderRequest.items:type_name -> order.v1.LineItem
-	0, // 2: order.v1.OrderMod.CreateOrder:input_type -> order.v1.CreateOrderRequest
-	0, // 3: order.v1.OrderMod.CreateOrder:output_type -> order.v1.CreateOrderRequest
+	0, // 2: order.v1.OrderService.CreateOrder:input_type -> order.v1.CreateOrderRequest
+	2, // 3: order.v1.OrderService.CreateOrder:output_type -> order.v1.CreateOrderResponse
 	3, // [3:4] is the sub-list for method output_type
 	2, // [2:3] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
@@ -202,7 +240,7 @@ func file_order_v1_order_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_order_v1_order_service_proto_rawDesc), len(file_order_v1_order_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

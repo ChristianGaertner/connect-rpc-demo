@@ -4,8 +4,8 @@ package order.v1;
 
 import "google/protobuf/timestamp.proto";
 
-service OrderMod {
-  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderRequest);
+service OrderService {
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
 }
 
 message CreateOrderRequest {
@@ -19,3 +19,5 @@ message LineItem {
   string product_id = 2;
   int64 quantity = 3;
 }
+
+message CreateOrderResponse {}

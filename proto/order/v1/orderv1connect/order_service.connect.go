@@ -21,8 +21,8 @@ import (
 const _ = connect.IsAtLeastVersion1_13_0
 
 const (
-	// OrderModName is the fully-qualified name of the OrderMod service.
-	OrderModName = "order.v1.OrderMod"
+	// OrderServiceName is the fully-qualified name of the OrderService service.
+	OrderServiceName = "order.v1.OrderService"
 )
 
 // These constants are the fully-qualified names of the RPCs defined in this package. They're
@@ -33,76 +33,77 @@ const (
 // reflection-formatted method names, remove the leading slash and convert the remaining slash to a
 // period.
 const (
-	// OrderModCreateOrderProcedure is the fully-qualified name of the OrderMod's CreateOrder RPC.
-	OrderModCreateOrderProcedure = "/order.v1.OrderMod/CreateOrder"
+	// OrderServiceCreateOrderProcedure is the fully-qualified name of the OrderService's CreateOrder
+	// RPC.
+	OrderServiceCreateOrderProcedure = "/order.v1.OrderService/CreateOrder"
 )
 
-// OrderModClient is a client for the order.v1.OrderMod service.
-type OrderModClient interface {
-	CreateOrder(context.Context, *connect.Request[v1.CreateOrderRequest]) (*connect.Response[v1.CreateOrderRequest], error)
+// OrderServiceClient is a client for the order.v1.OrderService service.
+type OrderServiceClient interface {
+	CreateOrder(context.Context, *connect.Request[v1.CreateOrderRequest]) (*connect.Response[v1.CreateOrderResponse], error)
 }
 
-// NewOrderModClient constructs a client for the order.v1.OrderMod service. By default, it uses the
-// Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and sends
+// NewOrderServiceClient constructs a client for the order.v1.OrderService service. By default, it
+// uses the Connect protocol with the binary Protobuf Codec, asks for gzipped responses, and sends
 // uncompressed requests. To use the gRPC or gRPC-Web protocols, supply the connect.WithGRPC() or
 // connect.WithGRPCWeb() options.
 //
 // The URL supplied here should be the base URL for the Connect or gRPC server (for example,
 // http://api.acme.com or https://acme.com/grpc).
-func NewOrderModClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) OrderModClient {
+func NewOrderServiceClient(httpClient connect.HTTPClient, baseURL string, opts ...connect.ClientOption) OrderServiceClient {
 	baseURL = strings.TrimRight(baseURL, "/")
-	orderModMethods := v1.File_order_v1_order_service_proto.Services().ByName("OrderMod").Methods()
-	return &orderModClient{
-		createOrder: connect.NewClient[v1.CreateOrderRequest, v1.CreateOrderRequest](
+	orderServiceMethods := v1.File_order_v1_order_service_proto.Services().ByName("OrderService").Methods()
+	return &orderServiceClient{
+		createOrder: connect.NewClient[v1.CreateOrderRequest, v1.CreateOrderResponse](
 			httpClient,
-			baseURL+OrderModCreateOrderProcedure,
-			connect.WithSchema(orderModMethods.ByName("CreateOrder")),
+			baseURL+OrderServiceCreateOrderProcedure,
+			connect.WithSchema(orderServiceMethods.ByName("CreateOrder")),
 			connect.WithClientOptions(opts...),
 		),
 	}
 }
 
-// orderModClient implements OrderModClient.
-type orderModClient struct {
-	createOrder *connect.Client[v1.CreateOrderRequest, v1.CreateOrderRequest]
+// orderServiceClient implements OrderServiceClient.
+type orderServiceClient struct {
+	createOrder *connect.Client[v1.CreateOrderRequest, v1.CreateOrderResponse]
 }
 
-// CreateOrder calls order.v1.OrderMod.CreateOrder.
-func (c *orderModClient) CreateOrder(ctx context.Context, req *connect.Request[v1.CreateOrderRequest]) (*connect.Response[v1.CreateOrderRequest], error) {
+// CreateOrder calls order.v1.OrderService.CreateOrder.
+func (c *orderServiceClient) CreateOrder(ctx context.Context, req *connect.Request[v1.CreateOrderRequest]) (*connect.Response[v1.CreateOrderResponse], error) {
 	return c.createOrder.CallUnary(ctx, req)
 }
 
-// OrderModHandler is an implementation of the order.v1.OrderMod service.
-type OrderModHandler interface {
-	CreateOrder(context.Context, *connect.Request[v1.CreateOrderRequest]) (*connect.Response[v1.CreateOrderRequest], error)
+// OrderServiceHandler is an implementation of the order.v1.OrderService service.
+type OrderServiceHandler interface {
+	CreateOrder(context.Context, *connect.Request[v1.CreateOrderRequest]) (*connect.Response[v1.CreateOrderResponse], error)
 }
 
-// NewOrderModHandler builds an HTTP handler from the service implementation. It returns the path on
-// which to mount the handler and the handler itself.
+// NewOrderServiceHandler builds an HTTP handler from the service implementation. It returns the
+// path on which to mount the handler and the handler itself.
 //
 // By default, handlers support the Connect, gRPC, and gRPC-Web protocols with the binary Protobuf
 // and JSON codecs. They also support gzip compression.
-func NewOrderModHandler(svc OrderModHandler, opts ...connect.HandlerOption) (string, http.Handler) {
-	orderModMethods := v1.File_order_v1_order_service_proto.Services().ByName("OrderMod").Methods()
-	orderModCreateOrderHandler := connect.NewUnaryHandler(
-		OrderModCreateOrderProcedure,
+func NewOrderServiceHandler(svc OrderServiceHandler, opts ...connect.HandlerOption) (string, http.Handler) {
+	orderServiceMethods := v1.File_order_v1_order_service_proto.Services().ByName("OrderService").Methods()
+	orderServiceCreateOrderHandler := connect.NewUnaryHandler(
+		OrderServiceCreateOrderProcedure,
 		svc.CreateOrder,
-		connect.WithSchema(orderModMethods.ByName("CreateOrder")),
+		connect.WithSchema(orderServiceMethods.ByName("CreateOrder")),
 		connect.WithHandlerOptions(opts...),
 	)
-	return "/order.v1.OrderMod/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return "/order.v1.OrderService/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
-		case OrderModCreateOrderProcedure:
-			orderModCreateOrderHandler.ServeHTTP(w, r)
+		case OrderServiceCreateOrderProcedure:
+			orderServiceCreateOrderHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
 	})
 }
 
-// UnimplementedOrderModHandler returns CodeUnimplemented from all methods.
-type UnimplementedOrderModHandler struct{}
+// UnimplementedOrderServiceHandler returns CodeUnimplemented from all methods.
+type UnimplementedOrderServiceHandler struct{}
 
-func (UnimplementedOrderModHandler) CreateOrder(context.Context, *connect.Request[v1.CreateOrderRequest]) (*connect.Response[v1.CreateOrderRequest], error) {
-	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("order.v1.OrderMod.CreateOrder is not implemented"))
+func (UnimplementedOrderServiceHandler) CreateOrder(context.Context, *connect.Request[v1.CreateOrderRequest]) (*connect.Response[v1.CreateOrderResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("order.v1.OrderService.CreateOrder is not implemented"))
 }
