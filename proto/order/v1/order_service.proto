@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package order.v1;
+
+import "google/protobuf/timestamp.proto";
+
+service OrderMod {
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderRequest);
+}
+
+message CreateOrderRequest {
+  string id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  repeated LineItem items = 3;
+}
+
+message LineItem {
+  int32 position = 1;
+  string product_id = 2;
+  int64 quantity = 3;
+}
