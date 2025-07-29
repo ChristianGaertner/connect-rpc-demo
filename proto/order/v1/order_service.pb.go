@@ -7,6 +7,7 @@
 package orderv1
 
 import (
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -182,9 +183,9 @@ var File_order_v1_order_service_proto protoreflect.FileDescriptor
 
 const file_order_v1_order_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1corder/v1/order_service.proto\x12\border.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x89\x01\n" +
-	"\x12CreateOrderRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x129\n" +
+	"\x1corder/v1/order_service.proto\x12\border.v1\x1a\x1bbuf/validate/validate.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\x94\x01\n" +
+	"\x12CreateOrderRequest\x12\x19\n" +
+	"\x02id\x18\x01 \x01(\tB\t\xbaH\x06r\x04\x10\x02\x182R\x02id\x129\n" +
 	"\n" +
 	"created_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12(\n" +
 	"\x05items\x18\x03 \x03(\v2\x12.order.v1.LineItemR\x05items\"a\n" +

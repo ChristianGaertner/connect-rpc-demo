@@ -10,7 +10,10 @@ service OrderService {
 }
 
 message CreateOrderRequest {
-  string id = 1;
+  string id = 1 [(buf.validate.field).string = {
+    min_len: 2
+    max_len: 50
+  }];
   google.protobuf.Timestamp created_at = 2;
   repeated LineItem items = 3;
 }
