@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/ChristianGaertner/connect-rpc-demo/internal/httpmiddleware"
 	"github.com/ChristianGaertner/connect-rpc-demo/internal/inproc"
 	"github.com/ChristianGaertner/connect-rpc-demo/internal/order"
 	"github.com/ChristianGaertner/connect-rpc-demo/internal/product"
@@ -43,7 +44,7 @@ func run(ctx context.Context) error {
 	g.Go(func() error {
 		addr := "localhost:7444"
 		fmt.Println(addr, "service started on", addr)
-		return http.ListenAndServe(addr, mux)
+		return http.ListenAndServe(addr, httpmiddleware.CORS(mux))
 	})
 	return g.Wait()
 }

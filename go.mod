@@ -12,8 +12,10 @@ require (
 require (
 	buf.build/go/protovalidate v0.14.0 // indirect
 	cel.dev/expr v0.24.0 // indirect
+	connectrpc.com/cors v0.1.0
 	github.com/antlr4-go/antlr/v4 v4.13.1 // indirect
 	github.com/google/cel-go v0.26.0 // indirect
+	github.com/rs/cors v1.11.1
 	github.com/stoewer/go-strcase v1.3.1 // indirect
 	golang.org/x/exp v0.0.0-20250718183923-645b1fa84792 // indirect
 	golang.org/x/sync v0.16.0
