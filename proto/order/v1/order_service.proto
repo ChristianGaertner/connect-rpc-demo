@@ -20,7 +20,7 @@ message CreateOrderRequest {
 
 message LineItem {
   int32 position = 1;
-  string product_id = 2;
+  int64 product_id = 2;
   int64 quantity = 3;
 }
 
